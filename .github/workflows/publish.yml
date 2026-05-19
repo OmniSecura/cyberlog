@@ -8,7 +8,7 @@ on:
     tags: ["v*"]
 
 permissions:
-  contents: read
+  contents: write   # needed to create GitHub Releases
   id-token: write   # required for PyPI's OIDC-based "trusted publisher" flow
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/cyberlog
+      url: https://pypi.org/p/cyberlog-sdk
     steps:
       - uses: actions/checkout@v4
 
@@ -36,8 +36,16 @@ jobs:
       - name: Smoke-test the built wheel
         run: |
           python -m venv /tmp/probe
-          /tmp/probe/bin/pip install dist/cyberlog-*.whl
+          /tmp/probe/bin/pip install dist/cyberlog_sdk-*.whl
           /tmp/probe/bin/python -c "import cyberlog; print(cyberlog.__version__)"
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+          files: dist/*
