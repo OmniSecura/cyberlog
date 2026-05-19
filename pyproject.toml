@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 # ── Project metadata ──────────────────────────────────────────────────────────
 
 [project]
-name            = "cyberlog"
+name            = "cyberlog-sdk"
 description     = "Official Python SDK for CyberCore Logging — structured logs from any project with a single import."
 readme          = "README.md"
 license         = { file = "LICENSE" }
