@@ -7,8 +7,8 @@ exercise the retry / split / drop branches in isolation.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 from collections.abc import Iterable
+from dataclasses import dataclass, field
 
 import pytest
 
