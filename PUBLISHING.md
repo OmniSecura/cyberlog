@@ -15,7 +15,7 @@ cd cyberlog
 python -m venv .venv && source .venv/Scripts/activate   # Windows
 pip install -e ".[dev]"
 pytest -q                                               # → 24 passed
-python -m build                                         # → dist/cyberlog-0.1.0-py3-none-any.whl
+python -m build                                         # → dist/cyberlog_sdk-0.1.0-py3-none-any.whl
 twine check dist/*                                      # → PASSED
 ```
 
@@ -99,7 +99,7 @@ on Python 3.9–3.13. Wait for the green check.
 1. Sign in at https://pypi.org (create an account if you don't have one).
 2. Go to **Your projects → Publishing → Add a new pending publisher**.
 3. Fill in:
-   - **PyPI Project Name:** `cyberlog`
+   - **PyPI Project Name:** `cyberlog-sdk`
    - **Owner:** `OmniSecura`
    - **Repository name:** `cyberlog`
    - **Workflow filename:** `publish.yml`
@@ -140,7 +140,7 @@ Watch the run in the Actions tab. ~1 minute end to end.
 When it finishes:
 
 ```bash
-pip install cyberlog
+pip install cyberlog-sdk
 python -c "from cyberlog import CyberLogCore; print(CyberLogCore.__doc__[:60])"
 ```
 
