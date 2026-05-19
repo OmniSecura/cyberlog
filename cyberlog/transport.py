@@ -19,17 +19,17 @@ from __future__ import annotations
 import enum
 import json
 import logging
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Iterable
 
 import httpx
 
+from ._version import __version__
 from .exceptions import (
     CyberLogAuthError,
     CyberLogTransportError,
 )
 from .models import CyberLogEntry
-from ._version import __version__
 
 _log = logging.getLogger("cyberlog.transport")
 

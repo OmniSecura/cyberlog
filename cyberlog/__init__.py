@@ -15,9 +15,9 @@ thread, so calls to log.* never block your application.
 from ._version import __version__
 from .core import CyberLogCore
 from .exceptions import (
-    CyberLogError,
     CyberLogAuthError,
     CyberLogConfigurationError,
+    CyberLogError,
     CyberLogTransportError,
 )
 from .models import CyberLogEntry

@@ -1,6 +1,6 @@
 import pytest
 
-from cyberlog import CyberLogCore, CyberLogConfigurationError
+from cyberlog import CyberLogConfigurationError, CyberLogCore
 from cyberlog.buffer import Buffer
 
 

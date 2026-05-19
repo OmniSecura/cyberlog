@@ -35,6 +35,7 @@ queue to the server with batching, backoff, and 413-split handling.
 from __future__ import annotations
 
 import atexit
+import contextlib
 import logging
 import os
 import weakref
@@ -170,10 +171,8 @@ class CyberLogCore:
         def _atexit_flush() -> None:
             inst = self_ref()
             if inst is not None and inst._owns_io:
-                try:
+                with contextlib.suppress(Exception):
                     inst.close(timeout=2.0)
-                except Exception:  # noqa: BLE001 — never raise during shutdown
-                    pass
 
         atexit.register(_atexit_flush)
 
@@ -197,7 +196,7 @@ class CyberLogCore:
             )
         self._log(level, message, fields)
 
-    def bind(self, **fields: Any) -> "CyberLogCore":
+    def bind(self, **fields: Any) -> CyberLogCore:
         """
         Return a child logger that automatically includes `fields` in every
         emitted entry. Child loggers share the parent's network resources
@@ -227,7 +226,7 @@ class CyberLogCore:
         finally:
             self._transport.close()
 
-    def __enter__(self) -> "CyberLogCore":
+    def __enter__(self) -> CyberLogCore:
         return self
 
     def __exit__(self, exc_type, exc, tb) -> None:
@@ -236,11 +235,7 @@ class CyberLogCore:
     # ── Internals ────────────────────────────────────────────────────────────
 
     def _log(self, level: str, message: str, fields: dict[str, Any]) -> None:
-        if self._bound_fields:
-            # Caller-supplied fields take precedence over bound ones.
-            merged = {**self._bound_fields, **fields}
-        else:
-            merged = fields
+        merged = {**self._bound_fields, **fields} if self._bound_fields else fields
 
         entry = CyberLogEntry(
             level=level,

@@ -40,7 +40,7 @@ _log = logging.getLogger("cyberlog.buffer")
 class Buffer:
     def __init__(
         self,
-        transport: "Transport",
+        transport: Transport,
         *,
         batch_size: int = 100,
         flush_interval: float = 2.0,
